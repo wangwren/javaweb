@@ -27,4 +27,4 @@
     - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.
 
 <!--用到的链接-->
-[Demo1](day15\src\demo\Demo1)
+[Demo1]: day15\src\demo\Demo1
