@@ -25,6 +25,3 @@
         - 缺点:只能应用在sql语句相同，但参数不同的批处理中。因此此种形式的批处理经常用于在同一个表中批量插入数据或批量更新表的数据。
 - 获得数据库自动生成的主键
     - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.
-
-<!--用到的链接-->
-[Demo1]: https://github.com/wangwren/javaweb/day15/src/demo/Demo1
