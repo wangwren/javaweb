@@ -13,7 +13,7 @@
 内容包括:  
 - 向mysql数据库中插入大文本、二进制(图片，视频等)数据。  
     - mysql的大文本数据类型**text**，二进制类型**blob**。(也有别的类型，即类型存储的大，可查API)  
-    - 遇到的问题:当对大文本和二进制进行设置时，需要调用`setCharacterStream(int parameterIndex,Reader reader,int length)`方法，还有一个`setCharacterStream(int parameterIndex,Reader reader,long length)`。只不过后者的方法需要在jdk1.6之后才能够使用，但是我在编写时调用了后者，确报出 `java.lang.AbstractMethodError:com.mysql.jdbc.PreparedStatement.setCharacterStream(ILjava/io/Reader;`的错误，进行修改后还是调用该方法，并将第三个参数强转成int类型就好通过了，具体代码可看[Demo1]，Demo2.该问题原因还不清楚
+    - 遇到的问题:当对大文本和二进制进行设置时，需要调用`setCharacterStream(int parameterIndex,Reader reader,int length)`方法，还有一个`setCharacterStream(int parameterIndex,Reader reader,long length)`。只不过后者的方法需要在jdk1.6之后才能够使用，但是我在编写时调用了后者，确报出 `java.lang.AbstractMethodError:com.mysql.jdbc.PreparedStatement.setCharacterStream(ILjava/io/Reader;`的错误，进行修改后还是调用该方法，并将第三个参数强转成int类型就好通过了，具体代码可看[Demo1]，Demo2.该问题原因还不清楚
 - 批量处理sql语句
     - statement批处理:
         - 优点:可以向数据库中发送多条不同的sql语句
@@ -27,4 +27,4 @@
     - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.
 
 <!--用到的链接-->
-[Demo1](day15/src/demo/Demo1)
+[Demo1](day15\src\demo\Demo1)
