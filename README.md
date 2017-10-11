@@ -25,3 +25,114 @@
         - 缺点:只能应用在sql语句相同，但参数不同的批处理中。因此此种形式的批处理经常用于在同一个表中批量插入数据或批量更新表的数据。
 - 获得数据库自动生成的主键
     - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.
+##day16
+- 事务:在jdbc中使用事务
+    - 当JDBC程序向数据库获得一个`Connection`对象时，默认情况下这个`Connection`对象会自动向数据库提交在它上面发送的SQL语句，若想关闭这种默认提交方式，让多条SQL在一个事务中执行，可使用下列语句:
+    - `Connection.setAutoCommit(false);`**相当于数据库中的`start transaction`语句，开启事务**
+    - `Connection.rollback();`**相当于数据库中的`rollback`语句，回滚操作，通常设置在`catch`块中**
+    - `Connection.commit();`**相当于数据库中的`commit`语句，提交操作**
+- 事务实例:比如银行转账，当a向b转账时，如果a转的时候，程序出错，导致a的钱已经扣除，而b的钱还未到帐。使用事务就可以阻止这种事情发生，将两条sql语句编写在一个事务中，如果发生错误，将会回滚，使a的钱也没有扣除  
+**详细代码请查看day16 Demo1、Demo2**  
+- 事务的特性:
+    - **原子性**:原子性是指事物是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。
+    - **一致性**:事务必须使数据库从一个一致性状态变换到另一个一致性状态。
+    - **隔离性**:事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务之间要相互隔离。
+    - **持久性**:持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来即使数据库中数据的改变就是永久性的，接下来即使数据库发生故障也不应该对其有任何影响。  
+- 事务的隔离级别:多个线程开启各自事务操作数据库中数据时，数据库系统要负责隔离操作，以保证各个线程在获取数据时的准确性。不考虑隔离性，可能引发的问题:**脏读**、**不可重复读**、**虚读**。
+- mysql共定义了四种隔离级别:
+    - **Serializable**:可避免脏读、不可重复读、虚读情况发生。设置该种级别性能会降低，在做统计时就可以使用该级别。
+    - **Repeatable read**:可以避免脏读、不可重复读情况的发生。
+    - **Read committed**:可避免脏读情况发生(读已提交)。
+    - **Read uncommitted**:最低级别，以上情况均无法保证。(读未提交)
+- `set transaction isolation level`设置事务隔离级别。(数据库语句)
+- `select @@tx_isolation`查询当前事务隔离级别(数据库语句)
+- 演示不同隔离级别下的并发问题
+
+1.当把事务的隔离级别设置为read uncommitted时，会引发脏读、不可重复读和虚读
+
+
+A窗口
+```
+set transaction isolation level  read uncommitted;
+start transaction;
+select * from account;
+```
+-----发现a帐户是1000元，转到b窗口
+```
+select * from account
+```
+-----发现a多了100元，这时候a读到了b未提交的数据（脏读）
+
+
+B窗口
+```
+start transaction;
+update account set money=money+100 where name='aaa';
+```
+-----不要提交，转到a窗口查询
+
+
+2.当把事务的隔离级别设置为read committed时，会引发不可重复读和虚读，但避免了脏读
+
+A窗口
+```
+set transaction isolation level  read committed;
+start transaction;
+select * from account;
+```
+-----发现a帐户是1000元，转到b窗口
+```
+select * from account;
+```
+-----发现a帐户多了100,这时候，a读到了别的事务提交的数据，两次读取a帐户读到的是不同的结果（不可重复读）
+
+
+B窗口
+```
+start transaction;
+update account set money=money+100 where name='aaa';
+commit;
+```
+-----转到a窗口
+
+
+3.当把事务的隔离级别设置为repeatable read(mysql默认级别)时，会引发虚读，但避免了脏读、不可重复读
+
+A窗口
+```
+set transaction isolation level repeatable read;
+start transaction;
+select * from account;
+```
+----发现表有4个记录，转到b窗口
+```
+select * from account;
+```
+----可能发现表有5条记如，这时候发生了a读取到另外一个事务插入的数据（虚读）
+
+
+B窗口
+```
+start transaction;
+insert into account(name,money) values('ggg',1000);
+commit;
+```
+-----转到 a窗口
+
+4.当把事务的隔离级别设置为Serializable时，会避免所有问题
+A窗口
+```
+set transaction isolation level Serializable;
+start transaction;
+select * from account;
+```
+-----转到b窗口
+
+B窗口
+```
+start transaction;
+insert into account(name,money) values('ggg',1000);
+```
+-----发现不能插入，只能等待a结束事务才能插入
+
+
