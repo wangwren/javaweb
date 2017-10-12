@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import jdbcutils.JdbcUtils;
+import jdbcutils.JdbcUtils_DBCP;
 
 //事务
 public class Demo1 {
@@ -33,14 +34,14 @@ insert into account(name,money) values('ccc',1000);
 		
 		try{
 			
-			conn = JdbcUtils.getConnection();
+			conn = JdbcUtils_DBCP.getConnection();
 			conn.setAutoCommit(false);     //开启事务     start transaction
 			
 			String sql1 = "update account set money=money-100 where name='aaa'"; 
 			stmt = conn.prepareStatement(sql1);
 			stmt.executeUpdate();
 			
-			int i = 1/0;		//特意设置一个异常，使程序出错，观察数据库中的数据是否有变化
+			//int i = 1/0;		//特意设置一个异常，使程序出错，观察数据库中的数据是否有变化
 			
 			String sql2 = "update account set money=money+100 where name='bbb'";
 			stmt = conn.prepareStatement(sql2);
