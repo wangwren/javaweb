@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import jdbcutils.JdbcUtils;
+import jdbcutils.JdbcUtils_C3P0;
 import jdbcutils.JdbcUtils_DBCP;
 
 //事务
@@ -34,7 +35,7 @@ insert into account(name,money) values('ccc',1000);
 		
 		try{
 			
-			conn = JdbcUtils_DBCP.getConnection();
+			conn = JdbcUtils_C3P0.getConnection();
 			conn.setAutoCommit(false);     //开启事务     start transaction
 			
 			String sql1 = "update account set money=money-100 where name='aaa'"; 
@@ -48,7 +49,9 @@ insert into account(name,money) values('ccc',1000);
 			stmt.executeUpdate();
 			
 			
-			conn.commit();   //事务提交，事务提交了，两个sql语句才会生效，否则当语句结束，没有提交，数据回回滚至初始状态
+			conn.commit();   //事务提交，事务提交了，两个sql语句才会生效，否则当语句结束，没有提交，数据回回滚至初始状态\
+			
+			System.out.println("成功");
 			
 			
 		}catch(Exception e){
@@ -61,7 +64,7 @@ insert into account(name,money) values('ccc',1000);
 			e.printStackTrace();
 		}
 		finally{
-			JdbcUtils.release(conn, stmt, rs);
+			JdbcUtils_C3P0.release(conn, stmt, rs);
 		}
 
 	}

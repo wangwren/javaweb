@@ -169,5 +169,12 @@ insert into account(name,money) values('ggg',1000);
 	                   }
 	                }
                 ```
-               
+      - **C3P0连接池**:同样需要导入相关jar包:`c3p0-0.9.5.2.jar`和`mchange-commons-java-0.2.11.jar`。使用C3P0的配置文件xml文件，可以配置多个数据库连接相关的设置，C3P0连接池也比较常用。使用C3P0代码如下:
+
+![](./_image/2017-10-16-17-06-08.jpg?r=100&h=200)
+配置文件代码:
+
+![](./_image/2017-10-16-17-07-18.jpg)
+
 **DBCP的代码请参照jdbcUtils_DBCP**
+**C3P0的代码请参数jdbcUtils_C3P0**
