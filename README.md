@@ -177,4 +177,30 @@ insert into account(name,money) values('ggg',1000);
 ![](./_image/2017-10-16-17-07-18.jpg)
 
 **DBCP的代码请参照jdbcUtils_DBCP**  
-**C3P0的代码请参数jdbcUtils_C3P0**
+**C3P0的代码请参数jdbcUtils_C3P0**  
+## day17
+#### DBUtils使用
+- DBUtils:主要是封装了JDBC的代码，简化dao层的操作，DBUtils是由Apache公司提供
+- DBUtils三个核心类介绍:
+    1. DBUtils:连接数据库对象---jdbc辅助方法的集合类，线程安全。  
+       - 构造方法:`DbUtils()`  
+       -  作用:控制连接，控制驱动器加载一个类
+    2. QueryRunner:sql语句的操作对象，可以设置查询结果集的封装策略，线程安全。  
+       - 构造方法:  
+            - (1)QueryRunner()创建一个与**数据库无关**的QueryRunner对象，后期再操作数据库的时候，需要手动给一个Connection对象。可手动控制事务,而且需要手动关闭Connection对象。  
+            - (2)QueryRunner(DataSource ds)创建一个与**数据库关联**的QueryRunner对象，后期再创建数据库时，不需要Connection对象，自动管理事务。
+    3. ResultSetHandle:封装数据的策略对象--将封装结果集中的数据，转换到另一个对象。
+ResultSetHandler实现类介绍（由DbUtils框架提供）
+  - DbUtils给我们提供了10个ResultSetHandler实现类，分别是：
+     ①ArrayHandler:将查询结果的第一行数据，保存到Object数组中  
+      ②ArrayListHandler     将查询的结果，每一行先封装到Object数组中，然后将数据存入List集合
+      ③BeanHandler     将查询结果的第一行数据，封装到user对象
+     ④BeanListHandler     将查询结果的每一行封装到user对象，然后再存入List集合
+     ⑤ColumnListHandler     将查询结果的指定列的数据封装到List集合中
+     ⑥MapHandler     将查询结果的第一行数据封装到map结合（key==列名，value==列值）
+     ⑦MapListHandler     将查询结果的每一行封装到map集合（key==列名，value==列值），再将map集合存入List集合
+     ⑧BeanMapHandler     将查询结果的每一行数据，封装到User对象，再存入mao集合中（key==列名，value==列值）
+     ⑨KeyedHandler     将查询的结果的每一行数据，封装到map1（key==列名，value==列值 ），然后将map1集合（有多个）存入map2集合（只有一个）
+     ⑩ScalarHandler     封装类似count、avg、max、min、sum......函数的执行结果
+**详细代码请参照day17 Demo1**
+            
