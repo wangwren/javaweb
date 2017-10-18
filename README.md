@@ -191,16 +191,17 @@ insert into account(name,money) values('ggg',1000);
             - (2)QueryRunner(DataSource ds)创建一个与**数据库关联**的QueryRunner对象，后期再创建数据库时，不需要Connection对象，自动管理事务。
     3. ResultSetHandle:封装数据的策略对象--将封装结果集中的数据，转换到另一个对象。
 ResultSetHandler实现类介绍（由DbUtils框架提供）
-  - DbUtils给我们提供了10个ResultSetHandler实现类，分别是：
+  - DbUtils给我们提供了10个ResultSetHandler实现类，分别是：  
      ①ArrayHandler:将查询结果的第一行数据，保存到Object数组中  
-      ②ArrayListHandler     将查询的结果，每一行先封装到Object数组中，然后将数据存入List集合
-      ③BeanHandler     将查询结果的第一行数据，封装到user对象
-     ④BeanListHandler     将查询结果的每一行封装到user对象，然后再存入List集合
-     ⑤ColumnListHandler     将查询结果的指定列的数据封装到List集合中
-     ⑥MapHandler     将查询结果的第一行数据封装到map结合（key==列名，value==列值）
-     ⑦MapListHandler     将查询结果的每一行封装到map集合（key==列名，value==列值），再将map集合存入List集合
-     ⑧BeanMapHandler     将查询结果的每一行数据，封装到User对象，再存入mao集合中（key==列名，value==列值）
-     ⑨KeyedHandler     将查询的结果的每一行数据，封装到map1（key==列名，value==列值 ），然后将map1集合（有多个）存入map2集合（只有一个）
-     ⑩ScalarHandler     封装类似count、avg、max、min、sum......函数的执行结果
-**详细代码请参照day17 Demo1**
+      ②ArrayListHandler     将查询的结果，每一行先封装到Object数组中，然后将数据存入List集合  
+      ③BeanHandler     将查询结果的第一行数据，封装到user对象  
+     ④BeanListHandler     将查询结果的每一行封装到user对象，然后再存入List集合  
+     ⑤ColumnListHandler     将查询结果的指定列的数据封装到List集合中  
+     ⑥MapHandler     将查询结果的第一行数据封装到map结合（key==列名，value==列值）  
+     ⑦MapListHandler     将查询结果的每一行封装到map集合（key==列名，value==列值），再将map集合存入List集合  
+     ⑧BeanMapHandler     将查询结果的每一行数据，封装到User对象，再存入mao集合中（key==列名，value==列值）  
+     ⑨KeyedHandler     将查询的结果的每一行数据，封装到map1（key==列名，value==列值 ），然后将map1集合（有多个）存入map2集合（只有一个）  
+     ⑩ScalarHandler     封装类似count、avg、max、min、sum......函数的执行结果  
+     **以上10个ResultSetHandler实现类，常用的是BeanHandler、BeanListHandler和ScalarHandler**  
+**详细代码请参照day17 Demo1**  
             
