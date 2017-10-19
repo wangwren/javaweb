@@ -194,7 +194,7 @@ ResultSetHandler实现类介绍（由DbUtils框架提供）
   - DbUtils给我们提供了10个ResultSetHandler实现类，分别是：  
      ①ArrayHandler:将查询结果的第一行数据，保存到Object数组中  
       ②ArrayListHandler     将查询的结果，每一行先封装到Object数组中，然后将数据存入List集合  
-      ③BeanHandler     将查询结果的第一行数据，封装到user对象  
+      ③BeanHandler     将查询结果的第一行数据，封装到user对象  (此处的user是一个封装类)
      ④BeanListHandler     将查询结果的每一行封装到user对象，然后再存入List集合  
      ⑤ColumnListHandler     将查询结果的指定列的数据封装到List集合中  
      ⑥MapHandler     将查询结果的第一行数据封装到map结合（key==列名，value==列值）  
@@ -204,4 +204,7 @@ ResultSetHandler实现类介绍（由DbUtils框架提供）
      ⑩ScalarHandler     封装类似count、avg、max、min、sum......函数的执行结果  
      **以上10个ResultSetHandler实现类，常用的是BeanHandler、BeanListHandler和ScalarHandler**  
 **详细代码请参照day17 Demo1**  
+
+# ThreadLocal [深入剖析ThreadLocal](http://www.cnblogs.com/dolphin0520/p/3920407.html)
+
             
