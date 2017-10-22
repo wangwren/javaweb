@@ -13,7 +13,7 @@
 内容包括:  
 - 向mysql数据库中插入大文本、二进制(图片，视频等)数据。  
     - mysql的大文本数据类型**text**，二进制类型**blob**。(也有别的类型，即类型存储的大，可查API)  
-    - 遇到的问题:当对大文本和二进制进行设置时，需要调用`setCharacterStream(int parameterIndex,Reader reader,int length)`方法，还有一个`setCharacterStream(int parameterIndex,Reader reader,long length)`。只不过后者的方法需要在jdk1.6之后才能够使用，但是我在编写时调用了后者，确报出 `java.lang.AbstractMethodError:com.mysql.jdbc.PreparedStatement.setCharacterStream(ILjava/io/Reader;`的错误，进行修改后还是调用该方法，并将第三个参数强转成int类型就好通过了，具体代码可看[Demo1]，Demo2.该问题原因还不清楚
+    - 遇到的问题:当对大文本和二进制进行设置时，需要调用`setCharacterStream(int parameterIndex,Reader reader,int length)`方法，还有一个`setCharacterStream(int parameterIndex,Reader reader,long length)`。只不过后者的方法需要在jdk1.6之后才能够使用，但是我在编写时调用了后者，确报出 `java.lang.AbstractMethodError:com.mysql.jdbc.PreparedStatement.setCharacterStream(ILjava/io/Reader;`的错误，进行修改后还是调用该方法，并将第三个参数强转成int类型就好通过了，具体代码可看[Demo1](https://github.com/wangwren/javaweb/blob/master/day15/src/demo/Demo1.java)，[Demo2](https://github.com/wangwren/javaweb/blob/master/day15/src/demo/Demo2.java).该问题原因还不清楚
 - 批量处理sql语句
     - statement批处理:
         - 优点:可以向数据库中发送多条不同的sql语句
@@ -32,7 +32,7 @@
     - `Connection.rollback();`**相当于数据库中的`rollback`语句，回滚操作，通常设置在`catch`块中**
     - `Connection.commit();`**相当于数据库中的`commit`语句，提交操作**
 - 事务实例:比如银行转账，当a向b转账时，如果a转的时候，程序出错，导致a的钱已经扣除，而b的钱还未到帐。使用事务就可以阻止这种事情发生，将两条sql语句编写在一个事务中，如果发生错误，将会回滚，使a的钱也没有扣除  
-**详细代码请查看day16 Demo1、Demo2**  
+**详细代码请查看day16 [Demo1](https://github.com/wangwren/javaweb/blob/master/day16/src/day16/Demo1.java)、[Demo2](https://github.com/wangwren/javaweb/blob/master/day16/src/day16/Demo2.java)**  
 - 事务的特性:
     - **原子性**:原子性是指事物是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。
     - **一致性**:事务必须使数据库从一个一致性状态变换到另一个一致性状态。
@@ -176,8 +176,8 @@ insert into account(name,money) values('ggg',1000);
 
 ![](./_image/2017-10-16-17-07-18.jpg)
 
-**DBCP的代码请参照jdbcUtils_DBCP**  
-**C3P0的代码请参数jdbcUtils_C3P0**  
+**DBCP的代码请参照[jdbcUtils_DBCP](https://github.com/wangwren/javaweb/blob/master/day16/src/jdbcutils/JdbcUtils_DBCP.java)**  
+**C3P0的代码请参数[jdbcUtils_C3P0](https://github.com/wangwren/javaweb/blob/master/day16/src/jdbcutils/JdbcUtils_C3P0.java)**  
 ## day17
 #### DBUtils使用
 - DBUtils:主要是封装了JDBC的代码，简化dao层的操作，DBUtils是由Apache公司提供
@@ -203,7 +203,7 @@ ResultSetHandler实现类介绍（由DbUtils框架提供）
      ⑨KeyedHandler     将查询的结果的每一行数据，封装到map1（key==列名，value==列值 ），然后将map1集合（有多个）存入map2集合（只有一个）  
      ⑩ScalarHandler     封装类似count、avg、max、min、sum......函数的执行结果  
      **以上10个ResultSetHandler实现类，常用的是BeanHandler、BeanListHandler和ScalarHandler**  
-**详细代码请参照day17 Demo1**  
+**详细代码请参照[day17 Demo1](https://github.com/wangwren/javaweb/blob/master/day17/src/vvr/demo/Demo1.java)**  
 
 # ThreadLocal [深入剖析ThreadLocal](http://www.cnblogs.com/dolphin0520/p/3920407.html)
 ## day17_oracle
@@ -225,6 +225,6 @@ BLOB b = rs.getBlob("image");
    3. 利用io，获取到的cursor往数据库读写数据  
 **注意**:以上操作需开启事务。  
 **遇到的问题**:在导入Oracle的驱动时，如果是Oracle database 11g,那么就需要ojdbc6.jar包，否则会报错。  
-**具体代码请查看Demo1**
+**具体代码请查看[Demo1](https://github.com/wangwren/javaweb/blob/master/day17_oracle/src/vvr/demo/Demo1.java)**
 
             
