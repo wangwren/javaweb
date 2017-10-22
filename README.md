@@ -212,19 +212,19 @@ ResultSetHandler实现类介绍（由DbUtils框架提供）
  -  因而在操作Oracle的Blob之前，必须获得指针(定位器) 才能进行Blob数据的读取和写入。
  -  可以先使用`insert`语句向表中插入一个空的blob(**调用Oracle的函数`empty_blob()`**)，这将创建一个blob的指针，然后再把这个empty的blob的指针查询出来，这样就可以得到BLOB对象，从而读写blob数据了。
  - 步骤
-    1. 插入空blob
+   1. 插入空blob
 ```
 insert into test(id,image) values(?,empty_blob());
 ```
-    2. 获得blob的cursor
+   2. 获得blob的cursor
+   **注意**:需加`for update`,锁定该行，直至该行被修改完毕，保证不产生并发冲突。
 ```
 select image from test where id=? for update;
 BLOB b = rs.getBlob("image");
 ```
-**注意**:需加`for update`,锁定该行，直至该行被修改完毕，保证不产生并发冲突。
-    3. 利用io，获取到的cursor往数据库读写数据
-**注意**:以上操作需开启事务。
-**遇到的问题**:在导入Oracle的驱动时，如果是Oracle database 11g,那么就需要ojdbc6.jar包，否则会报错。
+   3. 利用io，获取到的cursor往数据库读写数据  
+**注意**:以上操作需开启事务。  
+**遇到的问题**:在导入Oracle的驱动时，如果是Oracle database 11g,那么就需要ojdbc6.jar包，否则会报错。  
 **具体代码请查看Demo1**
 
             
