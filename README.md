@@ -254,5 +254,5 @@ BLOB b = rs.getBlob("image");
         - `public ServletContext getServletContext()`:返回Servlet上下文对象的引用。
 - **Filter常见应用(1)**
  - 统一全站字符编码的过滤器
-        - 通过配置参数`encoding`指明使用何种字符编码，以处理`Html  Form`请求参数的中文问题。代码参见:
+        - 通过配置参数`encoding`指明使用何种字符编码，以处理`Html  Form`请求参数的中文问题。代码参见:[字符编码过滤](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/FilterDemo3.java)
             
