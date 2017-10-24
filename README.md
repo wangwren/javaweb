@@ -226,5 +226,33 @@ BLOB b = rs.getBlob("image");
 **注意**:以上操作需开启事务。  
 **遇到的问题**:在导入Oracle的驱动时，如果是Oracle database 11g,那么就需要ojdbc6.jar包，否则会报错。  
 **具体代码请查看[Demo1](https://github.com/wangwren/javaweb/blob/master/day17_oracle/src/vvr/demo/Demo1.java)**
-
+## day18
+- **`Filter`简介**:`Servlet API`中提供了一个`Filter`接口，开发web应用时，如果编写的java类实现了这个接口，则把这个java类称为过滤器Filter。通过Filter技术，开发人员可以实现用户在访问某个目标资源之前，对访问的请求和响应进行拦截。  
+- **Filter是如何实现拦截的**:
+    - Fliter接口中有一个`doFilter`方法，当开发人员编写好Filter，并配置对哪个web资源进行拦截后，WEB服务器每次在调用web资源的service方法之前，都会先调用一下filter的`doFilter`方法，因此，在该方法内编写代码可达到如下目的:
+        - 调用目标资源之前，让一段代码执行。
+        - 是否调用目标资源(即是否让用户访问web资源)
+            - web服务器在调用`doFilter`方法时，会传递一个filterChain对象进来，filterChain对象时filter接口中最重要的一个对象，它也提供了一个`doFilter`方法，开发人员可以根据需求决定是否调用此方法，调用该方法，则web服务器就会调用web资源的service方法，即web资源就会被访问，否则web资源不会被访问。
+        - 调用目标资源之后，让一段代码执行  
+- **Filter开发入门**
+    - Filter开发分为两个步骤:
+            - 编写java类实现Filter接口，并实现其`doFilter`方法。
+            - 在web.xml文件中使用`<filter>`和`<filter-mapping>`元素对编写的`filter`类进行注册，并设置它所能拦截的资源。
+    - Filter链
+     - 在一个web应用中，可以开发编写多个Filter，这些Filter组合起来称之为一个Filter链。
+     - web服务器根据Filter在web.xml文件中的注册顺序，决定先调用哪一个代表Filter，当第一个Filter的`doFilter`方法被调用时，web服务器会创建一个代表Filter链的`FilterChain`对象传递给该方法。在`doFilter`方法中，开发人员如果调用了`FilterChain`对象中是否有`filter`，如果有，则调用第二个filter,如果没有，则调用目标资源。
+- **Filter的生命周期**
+    - `init(FilterConfig arg0) throws ServletException`:
+        - Filter的创建和销毁由web服务器负责。web应用程序启动时，web服务器将创建Filter的实例对象，并调用其init方法，完成对象的初始化功能，从而为后续的用户请求做好拦截的准备工作，**filter对象只会创建一次，init方法也只会执行一次**。
+    - `destroy()`:
+        - 在web容器卸载Filter对象之前被调用。该方法在Filter的生命周期中仅执行一次。在这个方法中，可以释放过滤器使用的资源。
+- **`FilterConfig`接口**
+    - 用户在配置filter时，可以使用`<init-param>`为filter配置一些初始化参数，当web容器实例化Filter对象，调用其`init`方法时，会把封装了filter初始化参数的filterConfig对象传递进来。因此开发人员在编写filter时，通过filterConfig对象的方法，就可以获得:
+        - `String getFilterName()`:得到filter名称。
+        - `String getInitParameter(String name)`:返回在部署描述中指定名称的初始化参数的值。如果不存在返回null。
+        - `Enumeration getInitParameterNames()`:返回过滤器的所以初始化参数的名字的枚举集合。
+        - `public ServletContext getServletContext()`:返回Servlet上下文对象的引用。
+- **Filter常见应用(1)**
+ - 统一全站字符编码的过滤器
+        - 通过配置参数`encoding`指明使用何种字符编码，以处理`Html  Form`请求参数的中文问题。代码参见:
             
