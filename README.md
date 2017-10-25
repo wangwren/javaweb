@@ -254,5 +254,37 @@ BLOB b = rs.getBlob("image");
         - `public ServletContext getServletContext()`:返回Servlet上下文对象的引用。
 - **Filter常见应用(1)**
  - 统一全站字符编码的过滤器
-        - 通过配置参数`encoding`指明使用何种字符编码，以处理`Html  Form`请求参数的中文问题。代码参见:[字符编码过滤](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/FilterDemo3.java)
+        - 通过配置参数`encoding`指明使用何种字符编码，以处理`Html  Form`请求参数的中文问题。代码参见:[字符编码过滤](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/FilterDemo3.java)
+- **Filter的部署~部署Filter**
+```
+<filter>
+  	<filter-name>FilterDemo3</filter-name>
+  	<filter-class>vvr.web.filter.FilterDemo3</filter-class>
+  	<init-param>
+  		<param-name>charset</param-name>
+  		<param-value>utf-8</param-value>
+  	</init-param>
+  </filter>
+```
+   - `<filter-name>`用于为过滤器指定一个名字，该元素的内容不能为空。
+   - `<filter-class>`元素用于指定过滤器的完整的限定类名。
+   - `<init-param>`元素用于为过滤器指定初始化参数，它的子元素`<param-name>`指定参数的名字，`<param-value>`指定参数的值。在过滤器中，可以使用`FilterConfig`接口对象来访问初始化参数。  
+- **Filter的部署~映射Filter**
+   - `<filter-mapping>`元素用于设置一个Filter所负责拦截的资源。一个Filter拦截的资源可通过两种方式来指定:Servlet名称和资源访问的请求路径。
+    - `<filter-name>`子元素用于设置filter的注册名称。该值必须是在`<filter>`元素中声明过的过滤器的名字。
+    - `<url-pattern>`设置`filter`所拦截的请求路径(过滤器关联的URL样式)
+    - `<servlet-name>`指定过滤器所拦截的Servlet名称。
+    - `<dispatcher>`指定过滤器所拦截的资源被Servlet容器调用的方式，可以是`REQUEST`、`INCLUDE`、`FORWARD`、`ERROR`之一，默认是`REQUEST`。用户可以设置多个`<dispatcher>`子元素用来指定Filter对资源的多种调用方式进行拦截。
+- `<dispatcher>`子元素可以设置的值及其意义:
+    - `REQUEST`:当用户直接访问页面时，web容器将会调用过滤器。如果目标资源是通过`RequestDispatcher`的`include()`或`forward()`方法访问时，那么该过滤器就不会被调用。
+    - `INCLUDE`:如果目标资源是通过`RequestDispatcher`的`include()`方法访问时，那么该过滤器将被调用。除此之外，该过滤器不会被调用。
+    - `FORWARD`:如果目标资源是通过`RequestDispatcher`的`forward()`方法访问时，那么该过滤器将被调用，除此之外，该过滤器不调用。(jsp页面跳转时，就是`FORWARD`类型)
+    - `ERROR`:如果目标资源是通过**声明式异常处理机制**调用时，那么该过滤器将被调用。除此之外，过滤器不会被调用。
+```
+  <filter-mapping>
+  	<filter-name>FilterDemo3</filter-name>
+  	<url-pattern>/*</url-pattern>	
+  	<dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+```
             
