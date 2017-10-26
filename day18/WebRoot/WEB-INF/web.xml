@@ -10,6 +10,27 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
+  
+  <filter>
+  	<filter-name>CharSetEncodingFilter</filter-name>
+  	<filter-class>vvr.web.filter.CharSetEncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>CharSetEncodingFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+  	<filter-name>DirtyFilter</filter-name>
+  	<filter-class>vvr.web.filter.DirtyFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>DirtyFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
+  <!-- 
   <filter>
   	<filter-name>FilterDemo3</filter-name>
   	<filter-class>vvr.web.filter.FilterDemo3</filter-class>
@@ -20,8 +41,11 @@
   </filter>
   <filter-mapping>
   	<filter-name>FilterDemo3</filter-name>
-  	<url-pattern>/*</url-pattern>	
+  	<url-pattern>/*</url-pattern>
+  	<dispatcher>FORWARD</dispatcher>	
   </filter-mapping>
+  
+   -->
   
   
   <!-- * 代表拦截所以请求 -->
@@ -52,10 +76,28 @@
     <servlet-name>ServletDemo1</servlet-name>
     <servlet-class>vvr.web.servlet.ServletDemo1</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>CharsetEncodingServlet</servlet-name>
+    <servlet-class>vvr.web.servlet.CharsetEncodingServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DirtyServlet</servlet-name>
+    <servlet-class>vvr.web.servlet.DirtyServlet</servlet-class>
+  </servlet>
+
+
 
   <servlet-mapping>
     <servlet-name>ServletDemo1</servlet-name>
     <url-pattern>/ServletDemo1</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CharsetEncodingServlet</servlet-name>
+    <url-pattern>/CharsetEncodingServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DirtyServlet</servlet-name>
+    <url-pattern>/DirtyServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>
