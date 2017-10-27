@@ -287,4 +287,17 @@ BLOB b = rs.getBlob("image");
   	<dispatcher>FORWARD</dispatcher>
   </filter-mapping>
 ```
-            
+- **包装`(Decorator)`设计模式**
+    - 当某个对象的方法不适应业务需求时，通常有两种方式可以对方法进行增强:
+        - 编写子类，覆盖需增强的方法
+        - 使用包装设计模式对方法进行增强
+- `Decorator`设计模式的实现
+    - 首先看需要被增强对象继承了什么接口或父类，编写一个类去继承这些接口或父类。
+    - 在类中定义一个变量，变量类型即需要增强对象的类型。
+    - 在类中定义一个构造函数，接收需增强的对象。
+    - 覆盖需增强的方法，编写增强的代码。
+    - 对于不想增强的方法，直接调用被增强对象的方法。
+**举例**:使用`Decorator`设计模式为`BufferedReader`类的`readLine`方法添加行号的功能。
+- `request`对象的增强
+    - `Servlet API`中提供了一个`request`对象的`Decorator`设计模式的默认实现类`HttpServletRequestWrapper`,  `HttpServletRequestWrapper`类实现了`request`接口中的所有方法，但这些方法的内部实现都是仅仅调用了一下所包装的`request`对象的对应方法。以避免用户在对`request`对象进行增强时需要实现`request`接口中的所有方法。    
+- 使用`Decorator`模式包装`request`对象，完全解决`get`、`post`请求方式下的乱码问题。      
