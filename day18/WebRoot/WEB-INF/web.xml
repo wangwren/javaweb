@@ -29,7 +29,14 @@
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
   
-  
+  <filter>
+  	<filter-name>HtmlFilter</filter-name>
+  	<filter-class>vvr.web.filter.HtmlFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>HtmlFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
   <!-- 
   <filter>
   	<filter-name>FilterDemo3</filter-name>
@@ -84,6 +91,13 @@
     <servlet-name>DirtyServlet</servlet-name>
     <servlet-class>vvr.web.servlet.DirtyServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>HtmlServlet</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>vvr.web.servlet.HtmlServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -98,6 +112,10 @@
   <servlet-mapping>
     <servlet-name>DirtyServlet</servlet-name>
     <url-pattern>/DirtyServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>HtmlServlet</servlet-name>
+    <url-pattern>/HtmlServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>
