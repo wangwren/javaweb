@@ -301,4 +301,5 @@ BLOB b = rs.getBlob("image");
 **举例**:使用`Decorator`设计模式为`BufferedReader`类的`readLine`方法添加行号的功能。[BufferedReaderWrapper.java](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/demo/BufferedReaderWrapper.java)
 - `request`对象的增强
     - `Servlet API`中提供了一个`request`对象的`Decorator`设计模式的默认实现类`HttpServletRequestWrapper`,  `HttpServletRequestWrapper`类实现了`request`接口中的所有方法，但这些方法的内部实现都是仅仅调用了一下所包装的`request`对象的对应方法。以避免用户在对`request`对象进行增强时需要实现`request`接口中的所有方法。    
-- 使用`Decorator`模式包装`request`对象，完全解决`get`、`post`请求方式下的乱码问题。[CharSetEncodingFilter.java](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/CharSetEncodingFilter.java)      
+- 使用`Decorator`模式包装`request`对象，完全解决`get`、`post`请求方式下的乱码问题。[CharSetEncodingFilter.java](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/CharSetEncodingFilter.java)      
+**注意**：解决全站乱码问题的代码需要注意，该代码在myeclipse2014版本中可以实现，但是在myeclipse2017版本中不能实现，myeclipse2017中，就算在url地址中直接输入中文也能够显示出来，不需要转码，具体原因不明。
