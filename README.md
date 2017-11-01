@@ -219,7 +219,7 @@ insert into test(id,image) values(?,empty_blob());
 ```
    2. 获得blob的cursor
    **注意**:需加`for update`,锁定该行，直至该行被修改完毕，保证不产生并发冲突。
-```
+```java
 select image from test where id=? for update;
 BLOB b = rs.getBlob("image");
 ```
@@ -257,7 +257,7 @@ BLOB b = rs.getBlob("image");
  - 统一全站字符编码的过滤器
         - 通过配置参数`encoding`指明使用何种字符编码，以处理`Html  Form`请求参数的中文问题。代码参见:[字符编码过滤](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/FilterDemo3.java)
 - **Filter的部署~部署Filter**
-```
+```java
 <filter>
   	<filter-name>FilterDemo3</filter-name>
   	<filter-class>vvr.web.filter.FilterDemo3</filter-class>
@@ -281,7 +281,7 @@ BLOB b = rs.getBlob("image");
     - `INCLUDE`:如果目标资源是通过`RequestDispatcher`的`include()`方法访问时，那么该过滤器将被调用。除此之外，该过滤器不会被调用。
     - `FORWARD`:如果目标资源是通过`RequestDispatcher`的`forward()`方法访问时，那么该过滤器将被调用，除此之外，该过滤器不调用。(jsp页面跳转时，就是`FORWARD`类型)
     - `ERROR`:如果目标资源是通过**声明式异常处理机制**调用时，那么该过滤器将被调用。除此之外，过滤器不会被调用。
-```
+```java
   <filter-mapping>
   	<filter-name>FilterDemo3</filter-name>
   	<url-pattern>/*</url-pattern>	
