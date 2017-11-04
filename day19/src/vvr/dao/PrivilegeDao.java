@@ -16,7 +16,7 @@ public class PrivilegeDao {
 		try{
 			
 			QueryRunner query = new QueryRunner(JdbcUtils.getDataSource());
-			String sql = "insert into privilege(id,name.description) values(?,?,?)";
+			String sql = "insert into privilege(id,name,description) values(?,?,?)";
 			Object[] param = {p.getId(),p.getName(),p.getDescription()};
 			query.update(sql, param);
 			

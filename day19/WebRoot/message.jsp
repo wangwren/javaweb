@@ -4,11 +4,11 @@
 <html>
   <head>
     
-    <title>My JSP 'body.jsp' starting page</title>
+    <title>My JSP 'message.jsp' starting page</title>
 
   </head>
   
   <body>
-
+    ${message}
   </body>
 </html>
