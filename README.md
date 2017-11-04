@@ -304,3 +304,5 @@ BLOB b = rs.getBlob("image");
 - 使用`Decorator`模式包装`request`对象，完全解决`get`、`post`请求方式下的乱码问题。[CharSetEncodingFilter.java](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/CharSetEncodingFilter.java)      
 **注意**：解决全站乱码问题的代码需要注意，该代码在myeclipse2014版本中可以实现，但是在myeclipse2017版本中不能实现，myeclipse2017中，就算在url地址中直接输入中文也能够显示出来，不需要转码，具体原因不明。
 - 使用`Decortaor`模式包装request对象，实现html标签转义功能(Tomact服务器提供了转义html标签的工具类)[HtmlFilter.java](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/HtmlFilter.java)
+
+####[使用过滤器完成权限管理](https://github.com/wangwren/javaweb/tree/master/day19)
