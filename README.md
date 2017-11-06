@@ -306,5 +306,8 @@ BLOB b = rs.getBlob("image");
 - 使用`Decortaor`模式包装request对象，实现html标签转义功能(Tomact服务器提供了转义html标签的工具类)[HtmlFilter.java](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/HtmlFilter.java)
 
 ## [使用过滤器完成权限管理](https://github.com/wangwren/javaweb/tree/master/day19)
-- **遇到的问题**
+- **遇到的问题**  
 在编写角色类(Role)时，为角色增加权限的功能中，需要获取角色的当前权限和系统拥有的权限，如果角色已经拥有的系统中的权限，在系统权限显示时还是会出现已经拥有的代码，此代码只是在授权时，删除了已经拥有的权限又重新增加权限。但是我想要判断，如果已经拥有就不显示，用`<% %>`的方法可以实现，但是我想用`foreach`标签达到目的却没有完成！！！！！
+
+![](./_image/2017-11-06-19-56-00.jpg)
+如上图所示，系统权限中，不想出现删除商品，和删除分类选项，而且不使用`<% %>`完成。
