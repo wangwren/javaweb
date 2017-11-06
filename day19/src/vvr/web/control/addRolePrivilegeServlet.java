@@ -7,11 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import utils.WebUtils;
-import vvr.domain.Privilege;
 import vvr.service.SecurityService;
 
-public class AddPrivilegeServlet extends HttpServlet {
+public class addRolePrivilegeServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -22,25 +20,17 @@ public class AddPrivilegeServlet extends HttpServlet {
 
 		try{
 			
-			String name = request.getParameter("name");
-			String description = request.getParameter("description");
-			
-			Privilege privilege = new Privilege();
-			privilege.setName(name);
-			privilege.setDescription(description);
-			privilege.setId(WebUtils.makeUUID());
-			
 			SecurityService service = new SecurityService();
-			service.addPrivilege(privilege);
 			
-			request.setAttribute("message", "添加成功！！！");
+			String role_id = request.getParameter("role_id");
+			String[] privilege_id = request.getParameterValues("privilege_id");
 			
-			
+			service.updateRolePrivilege(role_id, privilege_id);
+			request.setAttribute("message", "授权成功！！！");
 		}catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("message", "添加失败！！！");
+			request.setAttribute("message", "授权失败！！！");
 		}
-		
 		request.getRequestDispatcher("/message.jsp").forward(request, response);
 	}
 

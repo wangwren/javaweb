@@ -24,7 +24,7 @@ public class ListPrivilegeServlet extends HttpServlet {
 		try{
 			
 			SecurityService service = new SecurityService();
-			List<Privilege> privileges = service.getAll();
+			List<Privilege> privileges = service.getAllPrivilege();
 			request.setAttribute("privileges", privileges);
 			request.getRequestDispatcher("/jsp/listPrivilege.jsp").forward(request, response);
 		}catch (Exception e) {

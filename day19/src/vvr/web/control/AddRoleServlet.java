@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import utils.WebUtils;
 import vvr.domain.Privilege;
+import vvr.domain.Role;
 import vvr.service.SecurityService;
 
-public class AddPrivilegeServlet extends HttpServlet {
+public class AddRoleServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -20,18 +21,19 @@ public class AddPrivilegeServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		try{
+try{
 			
 			String name = request.getParameter("name");
 			String description = request.getParameter("description");
 			
-			Privilege privilege = new Privilege();
-			privilege.setName(name);
-			privilege.setDescription(description);
-			privilege.setId(WebUtils.makeUUID());
+			
+			Role role = new Role();
+			role.setName(name);
+			role.setDescription(description);
+			role.setId(WebUtils.makeUUID());
 			
 			SecurityService service = new SecurityService();
-			service.addPrivilege(privilege);
+			service.addRole(role);
 			
 			request.setAttribute("message", "Ìí¼Ó³É¹¦£¡£¡£¡");
 			
