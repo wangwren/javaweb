@@ -1,9 +1,11 @@
-[TOC]  
+
 # [servlet3.0特性](https://www.ibm.com/developerworks/cn/java/j-lo-servlet30/index.html)
 # javaweb
 记录javaweb学习过程中的代码
 ## 说明
 该代码暂时从day14开始
+# 目录
+- **[客户管理，带有分页功能](#day14_customer)**
 
 ## day14_customer
 一个关于客户管理的页面，实现使用mysql实现客户的CURD。  
