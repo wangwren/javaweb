@@ -2,6 +2,12 @@
 - **[客户管理，带有分页功能](#day14_customer)**
 - **[文件上传](#day12_upload)**
 - **[数据库插入大数据、批处理](#day15)**
+- **[事务](#day16)**
+- **[连接池](#连接池:使用数据库连接池优化程序性能。)**
+- **[DBUtils使用](#DBUtils使用)**
+- **[使用Oracle数据库处理大数据](#day17_oracle)**
+- **[filter](#day18)**
+- **[权限管理](#权限管理)**
 # [servlet3.0特性](https://www.ibm.com/developerworks/cn/java/j-lo-servlet30/index.html)
 # javaweb
 记录javaweb学习过程中的代码
@@ -140,7 +146,7 @@ insert into account(name,money) values('ggg',1000);
 ```
 -----发现不能插入，只能等待a结束事务才能插入
 
-## **连接池**:使用数据库连接池优化程序性能。
+## 连接池:使用数据库连接池优化程序性能。
   - 应用程序直接获取数据库链接的缺点:用户每次请求都需要向数据库获得链接，而数据库创建链接通常需要消耗相对较大的资源，创建时间也较长。假设网站一天10万访问量，数据库服务器就需要创建10万次连接，极大的浪费数据库资源，并极易造成数据库服务器内存溢出。
   - 使用连接池一次性从数据库中获得多个连接，放到连接池中，当用户需要连接时，从连接池中获取链接，并删除连接池中的当前连接，当用户`conn.close()`时，又将该链接放回至连接池中。
   - 编写连接池需实现`java.sql.DataSource`接口。`DataSorce`接口中定义了两个重载的getConnection方法:
@@ -306,8 +312,8 @@ BLOB b = rs.getBlob("image");
 - 使用`Decorator`模式包装`request`对象，完全解决`get`、`post`请求方式下的乱码问题。[CharSetEncodingFilter.java](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/CharSetEncodingFilter.java)      
 **注意**：解决全站乱码问题的代码需要注意，该代码在myeclipse2014版本中可以实现，但是在myeclipse2017版本中不能实现，myeclipse2017中，就算在url地址中直接输入中文也能够显示出来，不需要转码，具体原因不明。
 - 使用`Decortaor`模式包装request对象，实现html标签转义功能(Tomact服务器提供了转义html标签的工具类)[HtmlFilter.java](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/HtmlFilter.java)
-
-## [使用过滤器完成权限管理](https://github.com/wangwren/javaweb/tree/master/day19)
+## 权限管理
+#### [使用过滤器完成权限管理](https://github.com/wangwren/javaweb/tree/master/day19)
 - **遇到的问题**  
 在编写角色类(Role)时，为角色增加权限的功能中，需要获取角色的当前权限和系统拥有的权限，如果角色已经拥有的系统中的权限，在系统权限显示时还是会出现已经拥有的代码，此代码只是在授权时，删除了已经拥有的权限又重新增加权限。但是我想要判断，如果已经拥有就不显示，用`<% %>`的方法可以实现，但是我想用`foreach`标签达到目的却没有完成！！！！！
 
