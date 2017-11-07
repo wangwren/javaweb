@@ -1,11 +1,12 @@
-
+# 目录
+- **[客户管理，带有分页功能](#day14_customer)**
+- **[文件上传](#day12_upload)**
+- **[数据库插入大数据、批处理](#day15)**
 # [servlet3.0特性](https://www.ibm.com/developerworks/cn/java/j-lo-servlet30/index.html)
 # javaweb
 记录javaweb学习过程中的代码
 ## 说明
 该代码暂时从day14开始
-# 目录
-- **[客户管理，带有分页功能](#day14_customer)**
 
 ## day14_customer
 一个关于客户管理的页面，实现使用mysql实现客户的CURD。  
@@ -139,13 +140,13 @@ insert into account(name,money) values('ggg',1000);
 ```
 -----发现不能插入，只能等待a结束事务才能插入
 
-- **连接池**:使用数据库连接池优化程序性能。
-    - 应用程序直接获取数据库链接的缺点:用户每次请求都需要向数据库获得链接，而数据库创建链接通常需要消耗相对较大的资源，创建时间也较长。假设网站一天10万访问量，数据库服务器就需要创建10万次连接，极大的浪费数据库资源，并极易造成数据库服务器内存溢出。
-    - 使用连接池一次性从数据库中获得多个连接，放到连接池中，当用户需要连接时，从连接池中获取链接，并删除连接池中的当前连接，当用户`conn.close()`时，又将该链接放回至连接池中。
-    - 编写连接池需实现`java.sql.DataSource`接口。`DataSorce`接口中定义了两个重载的getConnection方法:
-        - `Connection getConnection()`
-        - `Connection getConnection(String username,String password)`
-    - 由于自己编写连接池很麻烦，所以现在很多WEB服务器都提供了`DataSource`的实现，即连接池的实现，也有一些开源组织提供了数据源的独立实现:
+## **连接池**:使用数据库连接池优化程序性能。
+  - 应用程序直接获取数据库链接的缺点:用户每次请求都需要向数据库获得链接，而数据库创建链接通常需要消耗相对较大的资源，创建时间也较长。假设网站一天10万访问量，数据库服务器就需要创建10万次连接，极大的浪费数据库资源，并极易造成数据库服务器内存溢出。
+  - 使用连接池一次性从数据库中获得多个连接，放到连接池中，当用户需要连接时，从连接池中获取链接，并删除连接池中的当前连接，当用户`conn.close()`时，又将该链接放回至连接池中。
+  - 编写连接池需实现`java.sql.DataSource`接口。`DataSorce`接口中定义了两个重载的getConnection方法:
+   - `Connection getConnection()`
+   - `Connection getConnection(String username,String password)`
+ - 由于自己编写连接池很麻烦，所以现在很多WEB服务器都提供了`DataSource`的实现，即连接池的实现，也有一些开源组织提供了数据源的独立实现:
         - **DBCP数据库连接池**:应用程序需要导入相关jar包，**注意**dbcp2和dbcp1对jdk版本要求不一样。如果导入的是dbcp2，那么还需要comms-logging包和commons-pool2包，同时mysql的包jar包需要在mysql-connector5.1以上版本，否则运行时会报错。**如果mysql的jar包是5.0.4版本，那么对应的dbcp和pool版本应该为1.4和1.6版本，并且不需要导入logging包**。还需要注意的是，当使用的mysql版本是5.1.44时，**需要在配置文件中的url写成`url=jdbc:mysql://localhost:3306/day16?useSSL=false`**，否则也会出错。
         - 使用配置文件方法，使用dbcp连接池:  
 	
