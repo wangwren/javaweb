@@ -7,7 +7,7 @@
 - **[DBUtils使用](#day17)**
 - **[使用Oracle数据库处理大数据](#day17_oracle)**
 - **[filter](#day18)**
-- **[权限管理](#权限管理)**
+- **[使用filter完成权限管理](#权限管理)**
 # [servlet3.0特性](https://www.ibm.com/developerworks/cn/java/j-lo-servlet30/index.html)
 # javaweb
 记录javaweb学习过程中的代码
