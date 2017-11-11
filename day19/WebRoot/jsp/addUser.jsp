@@ -4,21 +4,21 @@
 <html>
   <head>
     
-    <title>My JSP 'addRole.jsp' starting page</title>
+    <title>My JSP 'addUser.jsp' starting page</title>
 
   </head>
   
   <body>
-    <form action="${pageContext.request.contextPath }/AddRoleServlet" method="post">
+    <form action="${pageContext.request.contextPath }/AddUserServlet" method="post">
     	<table align="center" width="60%">
     		<tr>
-    			<td align="center">角色名称:</td>
-    			<td align="center"><input type="text" name="name"></td>
+    			<td align="center">用户名称:</td>
+    			<td align="center"><input type="text" name="username"></td>
     		</tr>
     		<tr>
-    			<td align="center">角色描述：</td>
+    			<td align="center">用户密码：</td>
     			<td align="center">
-    				<textarea rows="8" cols="30" name="description"></textarea>
+    				<input type="text" name="password">
     			</td>
     		</tr>
     		<tr>

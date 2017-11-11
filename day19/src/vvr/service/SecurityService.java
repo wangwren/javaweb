@@ -5,15 +5,17 @@ import java.util.List;
 
 import vvr.dao.PrivilegeDao;
 import vvr.dao.RoleDao;
+import vvr.dao.UserDao;
 import vvr.domain.Privilege;
 import vvr.domain.Role;
+import vvr.domain.User;
 
 //对web层提供所有权限相关功能
 public class SecurityService {
 
-	PrivilegeDao pdao = new PrivilegeDao();
-	RoleDao rdao = new RoleDao();
-	
+	private PrivilegeDao pdao = new PrivilegeDao();
+	private RoleDao rdao = new RoleDao();
+	private UserDao udao =  new UserDao();
 	
 	//对web层提供添加权限的功能
 	public void addPrivilege(Privilege p){
@@ -63,5 +65,38 @@ public class SecurityService {
 		}
 		
 		rdao.updateRolePrivilege(role, list);
+	}
+	
+	//添加用户信息
+	public void addUser(User user){
+		udao.add(user);
+	}
+	
+	//查找用户
+	public User findUser(String id){
+		return udao.find(id);
+	}
+	
+	//获取所有用户
+	public List<User> getAllUser(){
+		return udao.getAll();
+	}
+	
+	//查找指定用户角色的功能
+	public List<Role> getUserRoles(String user_id){
+		return udao.getUserRoles(user_id);
+	}
+	
+	//为某个用户授予角色
+	public void updateUserRoles(String user_id,String[] roles_id){
+		
+		User user = udao.find(user_id);
+		List<Role> roles = new ArrayList<Role>();
+		for(String rid : roles_id){
+			Role role = rdao.find(rid);
+			roles.add(role);
+		}
+		
+		udao.updateUserRoles(user, roles);
 	}
 }

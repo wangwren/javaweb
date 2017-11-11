@@ -1,18 +1,18 @@
 package vvr.web.control;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import utils.WebUtils;
-import vvr.domain.Privilege;
 import vvr.domain.Role;
+import vvr.domain.User;
 import vvr.service.SecurityService;
 
-public class AddRoleServlet extends HttpServlet {
+public class ListUserServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -23,27 +23,15 @@ public class AddRoleServlet extends HttpServlet {
 
 		try{
 			
-			String name = request.getParameter("name");
-			String description = request.getParameter("description");
-			
-			
-			Role role = new Role();
-			role.setName(name);
-			role.setDescription(description);
-			role.setId(WebUtils.makeUUID());
-			
 			SecurityService service = new SecurityService();
-			service.addRole(role);
-			
-			request.setAttribute("message", "Ìí¼Ó³É¹¦£¡£¡£¡");
-			
-			
+			List<User> users = service.getAllUser();
+			request.setAttribute("users", users);
+			request.getRequestDispatcher("/jsp/listUser.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("message", "Ìí¼ÓÊ§°Ü£¡£¡£¡");
+			request.setAttribute("message", "²éÑ¯Ê§°Ü£¡£¡£¡");
+			request.getRequestDispatcher("/message.jsp").forward(request, response);
 		}
-		
-		request.getRequestDispatcher("/message.jsp").forward(request, response);
 	}
 
 }

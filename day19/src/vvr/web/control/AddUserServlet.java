@@ -8,11 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utils.WebUtils;
-import vvr.domain.Privilege;
-import vvr.domain.Role;
+import vvr.domain.User;
 import vvr.service.SecurityService;
 
-public class AddRoleServlet extends HttpServlet {
+public class AddUserServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -23,17 +22,17 @@ public class AddRoleServlet extends HttpServlet {
 
 		try{
 			
-			String name = request.getParameter("name");
-			String description = request.getParameter("description");
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
 			
 			
-			Role role = new Role();
-			role.setName(name);
-			role.setDescription(description);
-			role.setId(WebUtils.makeUUID());
+			User user = new User();
+			user.setId(WebUtils.makeUUID());
+			user.setUsername(username);
+			user.setPassword(password);
 			
 			SecurityService service = new SecurityService();
-			service.addRole(role);
+			service.addUser(user);
 			
 			request.setAttribute("message", "Ìí¼Ó³É¹¦£¡£¡£¡");
 			
