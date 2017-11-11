@@ -1,7 +1,9 @@
 package vvr.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import vvr.dao.PrivilegeDao;
 import vvr.dao.RoleDao;
@@ -58,9 +60,9 @@ public class SecurityService {
 		Role role = rdao.find(role_id);
 		
 		List<Privilege> list = new ArrayList<Privilege>();
-		
-		for(String p_id : privilege_id){
-			Privilege privilege = pdao.find(p_id);
+		for(int i = 0;privilege_id != null && i < privilege_id.length;i++){
+			
+			Privilege privilege = pdao.find(privilege_id[i]);
 			list.add(privilege);
 		}
 		
@@ -92,11 +94,34 @@ public class SecurityService {
 		
 		User user = udao.find(user_id);
 		List<Role> roles = new ArrayList<Role>();
-		for(String rid : roles_id){
-			Role role = rdao.find(rid);
+		for(int i = 0;roles_id != null && i < roles_id.length;i++){
+			
+			Role role = rdao.find(roles_id[i]);
 			roles.add(role);
 		}
 		
 		udao.updateUserRoles(user, roles);
+	}
+
+	public Set getUserAllPrivilege(String user_id) {
+		
+		Set allPrivilege = new HashSet();
+		
+		//得到用户拥有的角色
+		List<Role> user_roles = udao.getUserRoles(user_id);
+		
+		//得到角色拥有的权限
+		for(Role r : user_roles){
+			List role_privilege = rdao.getRolePrivileges(r.getId());
+			allPrivilege.addAll(role_privilege); //addAll()方法可以添加一个集合
+		}
+		
+		return allPrivilege;
+		
+	}
+
+	public User login(String username, String password) {
+		return udao.find(username, password);
+		
 	}
 }
