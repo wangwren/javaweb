@@ -21,7 +21,8 @@
 [返回顶部](#目录)
 ## day12_upload
 [day12_upload](https://github.com/wangwren/javaweb/tree/master/day12_upload)  
-文件上传代码，但是不太完善
+文件上传代码，但是不太完善  
+[返回顶部](#目录)
 ## day15
 内容包括:  
 - 向mysql数据库中插入大文本、二进制(图片，视频等)数据。  
@@ -37,7 +38,8 @@
         - 优点:发送的是预编译后的sql语句，执行效率高
         - 缺点:只能应用在sql语句相同，但参数不同的批处理中。因此此种形式的批处理经常用于在同一个表中批量插入数据或批量更新表的数据。
 - 获得数据库自动生成的主键
-    - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.
+    - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.  
+[返回顶部](#目录)
 ## day16
 - 事务:在jdbc中使用事务
     - 当JDBC程序向数据库获得一个`Connection`对象时，默认情况下这个`Connection`对象会自动向数据库提交在它上面发送的SQL语句，若想关闭这种默认提交方式，让多条SQL在一个事务中执行，可使用下列语句:
@@ -147,7 +149,8 @@ B窗口
 start transaction;
 insert into account(name,money) values('ggg',1000);
 ```
------发现不能插入，只能等待a结束事务才能插入
+-----发现不能插入，只能等待a结束事务才能插入  
+[返回顶部](#目录)
 
 ## 连接池
   - 连接池:使用数据库连接池优化程序性能。
@@ -191,6 +194,7 @@ insert into account(name,money) values('ggg',1000);
 
 **DBCP的代码请参照[jdbcUtils_DBCP](https://github.com/wangwren/javaweb/blob/master/day16/src/jdbcutils/JdbcUtils_DBCP.java)**  
 **C3P0的代码请参数[jdbcUtils_C3P0](https://github.com/wangwren/javaweb/blob/master/day16/src/jdbcutils/JdbcUtils_C3P0.java)**  
+[返回顶部](#目录)
 ## day17
 #### DBUtils使用
 - DBUtils:主要是封装了JDBC的代码，简化dao层的操作，DBUtils是由Apache公司提供
@@ -218,7 +222,8 @@ ResultSetHandler实现类介绍（由DbUtils框架提供）
      **以上10个ResultSetHandler实现类，常用的是BeanHandler、BeanListHandler和ScalarHandler**  
 **详细代码请参照[day17 Demo1](https://github.com/wangwren/javaweb/blob/master/day17/src/vvr/demo/Demo1.java)**  
 
-# ThreadLocal [深入剖析ThreadLocal](http://www.cnblogs.com/dolphin0520/p/3920407.html)
+# ThreadLocal [深入剖析ThreadLocal](http://www.cnblogs.com/dolphin0520/p/3920407.html)  
+[返回顶部](#目录)
 ## day17_oracle
 #### 使用Oracle数据库处理大数据(二进制数据)
  - Oracle定义了一个BLOB字段用于保存二进制数据。但这个字段并不能存放真正的二进制数据，只能向着个字段存一个指针，然后把数据放到指针所指向的Oracle的LOB段中，LOB段是在数据库内部表的一部分。
@@ -315,7 +320,8 @@ BLOB b = rs.getBlob("image");
     - `Servlet API`中提供了一个`request`对象的`Decorator`设计模式的默认实现类`HttpServletRequestWrapper`,  `HttpServletRequestWrapper`类实现了`request`接口中的所有方法，但这些方法的内部实现都是仅仅调用了一下所包装的`request`对象的对应方法。以避免用户在对`request`对象进行增强时需要实现`request`接口中的所有方法。    
 - 使用`Decorator`模式包装`request`对象，完全解决`get`、`post`请求方式下的乱码问题。[CharSetEncodingFilter.java](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/CharSetEncodingFilter.java)      
 **注意**：解决全站乱码问题的代码需要注意，该代码在myeclipse2014版本中可以实现，但是在myeclipse2017版本中不能实现，myeclipse2017中，就算在url地址中直接输入中文也能够显示出来，不需要转码，具体原因不明。
-- 使用`Decortaor`模式包装request对象，实现html标签转义功能(Tomact服务器提供了转义html标签的工具类)[HtmlFilter.java](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/HtmlFilter.java)
+- 使用`Decortaor`模式包装request对象，实现html标签转义功能(Tomact服务器提供了转义html标签的工具类)[HtmlFilter.java](https://github.com/wangwren/javaweb/blob/master/day18/src/vvr/web/filter/HtmlFilter.java)  
+[返回顶部](#目录)
 ## 权限管理
 #### [使用过滤器完成权限管理](https://github.com/wangwren/javaweb/tree/master/day19)
 - **遇到的问题**  
@@ -324,4 +330,5 @@ BLOB b = rs.getBlob("image");
 ![](./_image/2017-11-06-19-56-00.jpg)
 如上图所示，系统权限中，不想出现删除商品，和删除分类选项，而且不使用`<% %>`完成。`for-each`标签不能跳出循环。  
 **权限管理中的拦截器代码[CheckPrivilegeFilter.java](https://github.com/wangwren/javaweb/blob/master/day19/src/vvr/web/filter/CheckPrivilegeFilter.java)**  
-该权限管理主要就是使用filter完成，包含用户、角色、权限三个对象，主要还是对这个三个对象进行dao操作，最终实验一个filter进行管理，该权限管理可以加到任意的系统中使用.
+该权限管理主要就是使用filter完成，包含用户、角色、权限三个对象，主要还是对这个三个对象进行dao操作，最终实验一个filter进行管理，该权限管理可以加到任意的系统中使用.  
+[返回顶部](#目录)
