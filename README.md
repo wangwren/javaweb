@@ -351,29 +351,29 @@ BLOB b = rs.getBlob("image");
 	```
     - 为保证服务器安全，上传文件应该放在外界无法直接访问的目录,可以在`WEB-INF`目录下新建一个文件夹用于存放上传文件。
     - 为防止文件覆盖的现象发生，要为上传文件产生一个唯一的文件名
-    ```java
-    //给文件起别名，以防上传重复文件
+    	```java
+    	//给文件起别名，以防上传重复文件
 	   public String makeFileName(String filename){  //2.jpg
 		  return UUID.randomUUID().toString() + "_" + filename; //使用UUID算 出随机字符串之后加上filename，保证文件最后的格式正确
 	   }
-```
+	```
 
     - 为防止一个目录下面出现太多文件，要使用**hash算法打散存储**
-    ```java
-    //得到文件的保存路径,使上传的文件在随机路径,这个算法很重要
-	public String makePath(String filename,String savePath){
+    	```java
+    	//得到文件的保存路径,使上传的文件在随机路径,这个算法很重要
+		public String makePath(String filename,String savePath){
 		
-		int hashcode = filename.hashCode();	//得到上传文件的路径地址
-		int dir1 = hashcode&0xf;  //0--15	//使用路径的二进制与十六进制的 f 进行与运算，得到文件的后四位数，范围在0-15
-		int dir2 = (hashcode&0xf0)>>4;  //0-15	////使用路径的二进制与十六进制的 f0 进行与运算，再向右移四位，得到文件的后四位数，范围在0-15
+			int hashcode = filename.hashCode();	//得到上传文件的路径地址
+			int dir1 = hashcode&0xf;  //0--15	//使用路径的二进制与十六进制的 f 进行与运算，得到文件的后四位数，范围在0-15
+			int dir2 = (hashcode&0xf0)>>4;  //0-15	////使用路径的二进制与十六进制的 f0 进行与运算，再向右移四位，得到文件的后四位数，范围在0-15
 		
-		String dir = savePath + "\\" + dir1 + "\\" + dir2;  //WEB-INF\upload\2\3  WEB-INF\upload\3\5
-		File file = new File(dir);    //File对象也可以用来创建文件夹
+			String dir = savePath + "\\" + dir1 + "\\" + dir2;  //WEB-INF\upload\2\3  WEB-INF\upload\3\5
+			File file = new File(dir);    //File对象也可以用来创建文件夹
 		
-		//如果文件夹不存在，那就创建这个文件夹
-		if(!file.exists()){
-			file.mkdirs();	//注意调用mkdirs()方法，不要调用mkdir()方法，因为需要创建两级目录
+			//如果文件夹不存在，那就创建这个文件夹
+			if(!file.exists()){
+				file.mkdirs();	//注意调用mkdirs()方法，不要调用mkdir()方法，因为需要创建两级目录
+			}
+			return dir;
 		}
-		return dir;
-	}
-    ```
+    	```
