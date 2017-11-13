@@ -432,5 +432,6 @@ BLOB b = rs.getBlob("image");
     		div.appendChild(innerdiv);
     	}
     ```
-    文件上传具体代码：[UploadServlet.java](https://github.com/wangwren/javaweb/blob/master/day20/src/vvr/web/servlet/UploadServlet.java)    
+    
+    文件上传具体代码：[UploadServlet.java](https://github.com/wangwren/javaweb/blob/master/day20/src/vvr/web/servlet/UploadServlet.java)、  [1.jsp](https://github.com/wangwren/javaweb/blob/master/day20/WebRoot/1.jsp)  
     web页面中动态添加文件上传输入项具体代码：[upload2.jsp](https://github.com/wangwren/javaweb/blob/master/day20/WebRoot/upload2.jsp)
