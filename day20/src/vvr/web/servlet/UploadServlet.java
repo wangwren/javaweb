@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.ProgressListener;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -31,7 +33,38 @@ public class UploadServlet extends HttpServlet {
 		try{
 			
 			DiskFileItemFactory factory = new DiskFileItemFactory();
+			
+			/*
+			//设置服务器的缓存大小，默认为10KB
+			factory.setSizeThreshold(10);
+			*/
+			
+			//设置一个临时目录，当上传的文件超过服务器缓存的最大值时，将文件暂时保存到临时目录中
+			factory.setRepository(new File(this.getServletContext().getRealPath("/WEB-INF/temp")));
+			
+			
 			ServletFileUpload upload = new ServletFileUpload(factory);
+			
+			/*
+			//限制上传文件的大小，该方法中接收一个 Long 类型值，代表字节，1024 为 1KB
+			upload.setFileSizeMax(1024);	//如果超出大小会抛出FileUploadBase.FileSizeLimitExceededException异常
+			
+			//上传文件的总容量，即上传多个文件时，几个文件的大小加起来不能超过多少
+			upload.setSizeMax(1024*10);
+			*/
+			
+			//监听文件上传的速度
+			upload.setProgressListener(new ProgressListener() {
+				
+				@Override
+				public void update(long pBytesRead, long pContentLength,  int arg2) {
+					//pBytesRead代表当前处理		pContentLength代表文件大小			arg2代表哪个文件
+					System.out.println("文件大小为：" + pContentLength + ",当前已处理：" + pBytesRead);
+					
+				}
+			});
+			
+			
 			
 			//解决上传文件名的中文编码,设置request不好使
 			upload.setHeaderEncoding("UTF-8");
@@ -57,6 +90,11 @@ public class UploadServlet extends HttpServlet {
 					//获取文件名称
 					String fileName = item.getName();	////不同的浏览器提交的文件是不一样  c:\a\b\1.txt   1.txt
 					
+					//判断fileName是否为空
+					if(fileName == null || fileName.trim().equals("")){
+						continue;	//如果为空就跳出当前循环执行下一次循环
+					}
+					
 					//对fileName做字符串截取，获取文件名
 					fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);
 					
@@ -76,10 +114,19 @@ public class UploadServlet extends HttpServlet {
 					}
 					out.close();
 					in.close();
+					//保存至临时文件时需要删除，该语句必须在关流之后写
+					item.delete();
 				}
 			}
 			
-		}catch (Exception e) {
+		}catch (FileUploadBase.FileSizeLimitExceededException e) {
+			// 如果文件超出指定大小
+			e.printStackTrace();
+			request.setAttribute("message", "对不起，您上传的文件超过指定大小！！！");
+			request.getRequestDispatcher("/message.jsp").forward(request, response);
+			
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		

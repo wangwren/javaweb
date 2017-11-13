@@ -42,7 +42,7 @@
 <<<<<<< HEAD
     - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.  
 =======
-    - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.  
+    - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.  
 
 >>>>>>> 82c851e1b9235cfb57946c443b10449ca55363c3
 [返回顶部](#目录)
@@ -376,4 +376,59 @@ BLOB b = rs.getBlob("image");
 			}
 			return dir;
 		}
+    ```
+    - 要限制上传文件的最大值，可以通过：
+    ```java
+    //限制上传文件的大小，该方法中接收一个 Long 类型值，代表字节，1024 为 1KB
+			upload.setFileSizeMax(1024);	//如果超出大小会抛出FileUploadBase.FileSizeLimitExceededException异常,在catch中捕获这个异常以给用户友好提示
+			
+			//上传文件的总容量，即上传多个文件时，几个文件的大小加起来不能超过多少
+			upload.setSizeMax(1024*10);
+    ```
+    - 临时文件:在服务器中可以创建一个临时文件夹用于保存上传时文件超过服务器缓存的文件
+    ```java
+    //设置服务器的缓存大小，默认为10KB
+			factory.setSizeThreshold(10);
+	//设置一个临时目录，当上传的文件超过服务器缓存的最大值时，将文件暂时保存到临时目录中
+			factory.setRepository(new File(this.getServletContext().getRealPath("/WEB-INF/temp")));
+    ```
+    - 要限止上传文件的类型：在收到上传文件名时，判断后缀名是否合法
+    - 监听文件上传进度：该代码必须写在前面，不能在文件读完后再写，那样没意义
+    ```java
+    //监听文件上传的速度
+			upload.setProgressListener(new ProgressListener() {
+				
+				@Override
+				public void update(long pBytesRead, long pContentLength,  int arg2) {
+					//pBytesRead代表当前处理		pContentLength代表文件大小			arg2代表哪个文件
+					System.out.println("文件大小为：" + pContentLength + ",当前已处理：" + pBytesRead);
+					
+				}
+			});
+    ```
+    - 在web页面中动态添加文件上传输入项:依靠javascript完成
+    ```JavaScript
+    function addinput(){
+    		var div = document.getElementById("file");
+    		
+    		var input = document.createElement("input");
+    		input.type="file";
+    		input.name="filename";
+    		
+    		var del = document.createElement("input");
+    		del.type="button";
+    		del.value="删除";
+    		del.onclick = function d(){
+    			this.parentNode.parentNode.removeChild(this.parentNode);
+    		}
+    		
+    		
+    		var innerdiv = document.createElement("div");
+    		
+    		
+    		innerdiv.appendChild(input);
+    		innerdiv.appendChild(del);
+    		
+    		div.appendChild(innerdiv);
+    	}
     ```
