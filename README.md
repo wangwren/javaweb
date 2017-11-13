@@ -357,6 +357,7 @@ BLOB b = rs.getBlob("image");
 		  return UUID.randomUUID().toString() + "_" + filename; //使用UUID算 出随机字符串之后加上filename，保证文件最后的格式正确
 	   }
 ```
+
     - 为防止一个目录下面出现太多文件，要使用**hash算法打散存储**
     ```java
     //得到文件的保存路径,使上传的文件在随机路径,这个算法很重要
