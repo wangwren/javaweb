@@ -342,6 +342,7 @@ BLOB b = rs.getBlob("image");
 [返回顶部](#目录)
 ## day20
 - **文件上传的一些细节**  
+
     - 上传文件名的中文乱码和上传数据的中文乱码
 	```java
 	upload.setHeaderEncoding("UTF-8");  //解决上传文件名的中文乱码
