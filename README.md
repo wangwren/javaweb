@@ -8,6 +8,7 @@
 - **[使用Oracle数据库处理大数据](#day17_oracle)**
 - **[filter](#day18)**
 - **[使用filter完成权限管理](#权限管理)**
+- **[文件上传与下载](#day20)**
 # [servlet3.0特性](https://www.ibm.com/developerworks/cn/java/j-lo-servlet30/index.html)
 # javaweb
 记录javaweb学习过程中的代码
@@ -38,7 +39,7 @@
         - 优点:发送的是预编译后的sql语句，执行效率高
         - 缺点:只能应用在sql语句相同，但参数不同的批处理中。因此此种形式的批处理经常用于在同一个表中批量插入数据或批量更新表的数据。
 - 获得数据库自动生成的主键
-    - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.  
+    - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.  
 [返回顶部](#目录)
 ## day16
 - 事务:在jdbc中使用事务
@@ -154,7 +155,7 @@ insert into account(name,money) values('ggg',1000);
 
 ## 连接池
   - 连接池:使用数据库连接池优化程序性能。
-  - 应用程序直接获取数据库链接的缺点:用户每次请求都需要向数据库获得链接，而数据库创建链接通常需要消耗相对较大的资源，创建时间也较长。假设网站一天10万访问量，数据库服务器就需要创建10万次连接，极大的浪费数据库资源，并极易造成数据库服务器内存溢出。
+  - 应用程序直接获取数据库链接的缺点:用户每次请求都需要向数据库获得链接，而数据库创建链接通常需要消耗相对较大的资源，创建时间也较长。假设网站一天10万访问量，数据库服务器就需要创建10万次连接，极大的浪费数据库资源，并极易造成数据库服务器内存溢出。
   - 使用连接池一次性从数据库中获得多个连接，放到连接池中，当用户需要连接时，从连接池中获取链接，并删除连接池中的当前连接，当用户`conn.close()`时，又将该链接放回至连接池中。
   - 编写连接池需实现`java.sql.DataSource`接口。`DataSorce`接口中定义了两个重载的getConnection方法:
    - `Connection getConnection()`
@@ -332,3 +333,39 @@ BLOB b = rs.getBlob("image");
 **权限管理中的拦截器代码[CheckPrivilegeFilter.java](https://github.com/wangwren/javaweb/blob/master/day19/src/vvr/web/filter/CheckPrivilegeFilter.java)**  
 该权限管理主要就是使用filter完成，包含用户、角色、权限三个对象，主要还是对这个三个对象进行dao操作，最终实验一个filter进行管理，该权限管理可以加到任意的系统中使用.  
 [返回顶部](#目录)
+## day20
+- 文件上传的一些细节
+    - 上传文件名的中文乱码和上传数据的中文乱码  
+	```java
+	upload.setHeaderEncoding("UTF-8");  //解决上传文件名的中文乱码
+	//表单为文件上传，设置request编码无效,只能手工转换
+	1.1 value = new String(value.getBytes("iso8859-1"),"UTF-8");
+	1.2 String value = item.getString("UTF-8");
+	```
+    - 为保证服务器安全，上传文件应该放在外界无法直接访问的目录,可以在`WEB-INF`目录下新建一个文件夹用于存放上传文件。
+    - 为防止文件覆盖的现象发生，要为上传文件产生一个唯一的文件名
+    ```java
+    //给文件起别名，以防上传重复文件
+	   public String makeFileName(String filename){  //2.jpg
+		  return UUID.randomUUID().toString() + "_" + filename; //使用UUID算 出随机字符串之后加上filename，保证文件最后的格式正确
+	   }
+```
+    - 为防止一个目录下面出现太多文件，要使用**hash算法打散存储**
+    ```java
+    //得到文件的保存路径,使上传的文件在随机路径,这个算法很重要
+	public String makePath(String filename,String savePath){
+		
+		int hashcode = filename.hashCode();	//得到上传文件的路径地址
+		int dir1 = hashcode&0xf;  //0--15	//使用路径的二进制与十六进制的 f 进行与运算，得到文件的后四位数，范围在0-15
+		int dir2 = (hashcode&0xf0)>>4;  //0-15	////使用路径的二进制与十六进制的 f0 进行与运算，再向右移四位，得到文件的后四位数，范围在0-15
+		
+		String dir = savePath + "\\" + dir1 + "\\" + dir2;  //WEB-INF\upload\2\3  WEB-INF\upload\3\5
+		File file = new File(dir);    //File对象也可以用来创建文件夹
+		
+		//如果文件夹不存在，那就创建这个文件夹
+		if(!file.exists()){
+			file.mkdirs();	//注意调用mkdirs()方法，不要调用mkdir()方法，因为需要创建两级目录
+		}
+		return dir;
+	}
+    ```
