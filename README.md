@@ -341,7 +341,7 @@ BLOB b = rs.getBlob("image");
 该权限管理主要就是使用filter完成，包含用户、角色、权限三个对象，主要还是对这个三个对象进行dao操作，最终实验一个filter进行管理，该权限管理可以加到任意的系统中使用.  
 [返回顶部](#目录)
 ## day20
-- **文件上传的一些细节** 
+- **文件上传的一些细节**  
     - 上传文件名的中文乱码和上传数据的中文乱码
 	```java
 	upload.setHeaderEncoding("UTF-8");  //解决上传文件名的中文乱码
@@ -432,5 +432,5 @@ BLOB b = rs.getBlob("image");
     		div.appendChild(innerdiv);
     	}
     ```
-    文件上传具体代码：[UploadServlet.java](https://github.com/wangwren/javaweb/blob/master/day20/src/vvr/web/servlet/UploadServlet.java)  
-    web页面中动态添加文件上传输入项具体代码：
+    文件上传具体代码：[UploadServlet.java](https://github.com/wangwren/javaweb/blob/master/day20/src/vvr/web/servlet/UploadServlet.java)    
+    web页面中动态添加文件上传输入项具体代码：[upload2.jsp](https://github.com/wangwren/javaweb/blob/master/day20/WebRoot/upload2.jsp)
