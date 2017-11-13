@@ -351,15 +351,15 @@ BLOB b = rs.getBlob("image");
 	```
     - 为保证服务器安全，上传文件应该放在外界无法直接访问的目录,可以在`WEB-INF`目录下新建一个文件夹用于存放上传文件。
     - 为防止文件覆盖的现象发生，要为上传文件产生一个唯一的文件名
-    	```java
+    ```java
     	//给文件起别名，以防上传重复文件
 	   public String makeFileName(String filename){  //2.jpg
 		  return UUID.randomUUID().toString() + "_" + filename; //使用UUID算 出随机字符串之后加上filename，保证文件最后的格式正确
 	   }
-	```
+    ```
 
     - 为防止一个目录下面出现太多文件，要使用**hash算法打散存储**
-    	```java
+    ```java
     	//得到文件的保存路径,使上传的文件在随机路径,这个算法很重要
 		public String makePath(String filename,String savePath){
 		
@@ -376,4 +376,4 @@ BLOB b = rs.getBlob("image");
 			}
 			return dir;
 		}
-    	```
+    ```
