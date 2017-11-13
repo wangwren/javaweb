@@ -39,7 +39,12 @@
         - 优点:发送的是预编译后的sql语句，执行效率高
         - 缺点:只能应用在sql语句相同，但参数不同的批处理中。因此此种形式的批处理经常用于在同一个表中批量插入数据或批量更新表的数据。
 - 获得数据库自动生成的主键
+<<<<<<< HEAD
     - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.  
+=======
+    - 调用`rs = stmt.getGeneratedKeys()`方法就行，具体看Demo4.  
+
+>>>>>>> 82c851e1b9235cfb57946c443b10449ca55363c3
 [返回顶部](#目录)
 ## day16
 - 事务:在jdbc中使用事务
@@ -221,10 +226,11 @@ ResultSetHandler实现类介绍（由DbUtils框架提供）
      ⑨KeyedHandler     将查询的结果的每一行数据，封装到map1（key==列名，value==列值 ），然后将map1集合（有多个）存入map2集合（只有一个）  
      ⑩ScalarHandler     封装类似count、avg、max、min、sum......函数的执行结果  
      **以上10个ResultSetHandler实现类，常用的是BeanHandler、BeanListHandler和ScalarHandler**  
-**详细代码请参照[day17 Demo1](https://github.com/wangwren/javaweb/blob/master/day17/src/vvr/demo/Demo1.java)**  
+**详细代码请参照[day17 Demo1](https://github.com/wangwren/javaweb/blob/master/day17/src/vvr/demo/Demo1.java)**    
+[返回顶部](#目录)
 
 # ThreadLocal [深入剖析ThreadLocal](http://www.cnblogs.com/dolphin0520/p/3920407.html)  
-[返回顶部](#目录)
+
 ## day17_oracle
 #### 使用Oracle数据库处理大数据(二进制数据)
  - Oracle定义了一个BLOB字段用于保存二进制数据。但这个字段并不能存放真正的二进制数据，只能向着个字段存一个指针，然后把数据放到指针所指向的Oracle的LOB段中，LOB段是在数据库内部表的一部分。
@@ -244,7 +250,8 @@ BLOB b = rs.getBlob("image");
    3. 利用io，获取到的cursor往数据库读写数据  
 **注意**:以上操作需开启事务。  
 **遇到的问题**:在导入Oracle的驱动时，如果是Oracle database 11g,那么就需要ojdbc6.jar包，否则会报错。  
-**具体代码请查看[Demo1](https://github.com/wangwren/javaweb/blob/master/day17_oracle/src/vvr/demo/Demo1.java)**
+**具体代码请查看[Demo1](https://github.com/wangwren/javaweb/blob/master/day17_oracle/src/vvr/demo/Demo1.java)**  
+[返回顶部](#目录)
 ## day18
 - **`Filter`简介**:`Servlet API`中提供了一个`Filter`接口，开发web应用时，如果编写的java类实现了这个接口，则把这个java类称为过滤器Filter。通过Filter技术，开发人员可以实现用户在访问某个目标资源之前，对访问的请求和响应进行拦截。  
 - **Filter是如何实现拦截的**:
