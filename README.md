@@ -342,7 +342,7 @@ BLOB b = rs.getBlob("image");
 [返回顶部](#目录)
 ## day20
 - **文件上传的一些细节**  
-    - 上传文件名的中文乱码和上传数据的中文乱码  
+    - 上传文件名的中文乱码和上传数据的中文乱码  
 	```java
 	upload.setHeaderEncoding("UTF-8");  //解决上传文件名的中文乱码
 	//表单为文件上传，设置request编码无效,只能手工转换
@@ -433,5 +433,5 @@ BLOB b = rs.getBlob("image");
     	}
     ```
     
-    文件上传具体代码：[UploadServlet.java](https://github.com/wangwren/javaweb/blob/master/day20/src/vvr/web/servlet/UploadServlet.java)、  [1.jsp](https://github.com/wangwren/javaweb/blob/master/day20/WebRoot/1.jsp)  
-    web页面中动态添加文件上传输入项具体代码：[upload2.jsp](https://github.com/wangwren/javaweb/blob/master/day20/WebRoot/upload2.jsp)
+    文件上传具体代码：[UploadServlet.java](https://github.com/wangwren/javaweb/blob/master/day20/src/vvr/web/servlet/UploadServlet.java)、  [1.jsp](https://github.com/wangwren/javaweb/blob/master/day20/WebRoot/1.jsp)  
+    web页面中动态添加文件上传输入项具体代码：[upload2.jsp](https://github.com/wangwren/javaweb/blob/master/day20/WebRoot/upload2.jsp)
