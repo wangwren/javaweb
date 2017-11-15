@@ -30,6 +30,7 @@ public class UploadServlet extends HttpServlet {
 		//得到上传文件的保存路径
 		String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
 		
+		
 		try{
 			
 			DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -104,7 +105,7 @@ public class UploadServlet extends HttpServlet {
 					String saveFileName = this.makeFileName(fileName);
 					
 					//得到文件的保存路径
-					String realSavePath = this.makePath(fileName, savePath);
+					String realSavePath = this.makePath(saveFileName, savePath);
 					
 					FileOutputStream out = new FileOutputStream(realSavePath + "\\" + saveFileName);
 					byte[] buffer = new byte[1024];
