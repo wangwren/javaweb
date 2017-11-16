@@ -470,4 +470,35 @@ public class MyServletContextListener implements ServletContextListener {
   	<listener-class>vvr.web.MyServletContextListener</listener-class>
   </listener>
 ```
+### 监听`HttpSession`域对象创建和销毁
+- `HttpSessionListener`接口用于监听`HttpSession`的创建和销毁
+- 创建一个`Session`时，`sessionCreated(HttpSessionEvent arg0)`方法将会被调用
+- 销毁一个`Session`时，`sessionDestroyed(HttpSessionEvent arg0)`方法将会被调用
+- (此处复习`session`对象，写多个servlet都去`getSession`,看`ssession`的创建)
+- `Session`域对象创建和销毁的时机创建:
+ - 创建:用户每一次访问时，服务器创建`session`
+ - 销毁:如果用户的`session`30分钟没有使用，服务器就会销毁`session`，我们在web.xml里面也可以配置`session`失效时间
+- 示例代码:
+```java
+public class MyHttpSessionListener implements HttpSessionListener {
+	@Override
+	public void sessionCreated(HttpSessionEvent arg0) {
+		System.out.println("session被创建了");
+	}
+	@Override
+	public void sessionDestroyed(HttpSessionEvent arg0) {
+		System.out.println("session被销毁了");
+	}
+}
+
+//web.xml
+  <listener>
+  	<listener-class>vvr.web.listener.MyHttpSessionListener</listener-class>
+  </listener>
+  
+  <!-- 定义session销毁时间 -->
+  <session-config>
+  	<session-timeout>1</session-timeout>	<!-- 此处指定一分钟 -->
+  </session-config>
+```
 
