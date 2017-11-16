@@ -438,3 +438,36 @@ BLOB b = rs.getBlob("image");
  - **文件下载**
  [DownLoadServlet.java](https://github.com/wangwren/javaweb/blob/master/day20/src/vvr/web/servlet/DownLoadServlet.java)、[ListFilesServlet.java](https://github.com/wangwren/javaweb/blob/master/day20/src/vvr/web/servlet/ListFilesServlet.java)  
  [返回顶部](#目录)
+## Servlet监听器
+- 在Servlet规范中定义了多种类型的监听器，他们用于监听的事件源分别是`ServletContext`、`HttpSession`和`ServletRequest`这三个域对象。
+- Servlet规范针对这三个对象上的操作，又把这多种类型的监听器划分为三种类型。
+    - 监听三个域对象创建和销毁的事件监听器
+    - 监听域对象中属性的增加和删除的事件监听器
+    - 监听绑定到`HttpSession`域中的某个对象的状态的事件监听器
+### 监听`servletContext`域对象创建和销毁
+1.  `ServletContextListener`接口用于监听`ServletContext`对象的**创建**和**销毁**事件
+2.  当`ServletContext`对象被创建时，激发`contextInitialized(ServletContextEvent arg0)`方法
+3.  当`ServletContext`对象被销毁时，激发`contextDestroyed(ServletContextEvent arg0)`方法
+
+- **`ServletContext`域对象何时创建和销毁**:
+ - 创建:服务器自动针对每一个web应用创建`servletContext`
+ - 销毁:服务器关闭前先关闭代表每一个web应用的`servletContext`
+- 通过继承`ServletContextListener`接口来实现`ServletContext`的监听，在类中完成后，在`web.xml`文件中，对监听器进行配置，具体服务器是如何判断是谁的监听器，是依靠查看实现哪一个接口。示例代码:
+```java
+public class MyServletContextListener implements ServletContextListener {
+	@Override
+	public void contextDestroyed(ServletContextEvent arg0) {
+		System.out.println("context摧毁");
+	}
+    @Override
+	public void contextInitialized(ServletContextEvent arg0) {
+		System.out.println("context创建");
+	}
+}
+
+//web.xml文件中
+<listener>
+  	<listener-class>vvr.web.MyServletContextListener</listener-class>
+  </listener>
+```
+
