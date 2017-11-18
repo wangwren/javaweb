@@ -501,4 +501,30 @@ public class MyHttpSessionListener implements HttpSessionListener {
   	<session-timeout>1</session-timeout>	<!-- 此处指定一分钟 -->
   </session-config>
 ```
+### 监听`HttpRequest`域对象创建和销毁
+- `ServletRequestListener`接口用于监听`ServletRequest`对象的创建和销毁
+- `Request`对象被创建时，监听器的`requestInitialized(ServletRequestEvent sre)`方法将会被调用
+- `Request`对象被销毁时，监听器的`requestDestroyed(ServletRequestEvent sre)`方法将会被调用
+- (此处复习`request`对象，在浏览器窗口中多次刷新访问`servlet`，看`request`对象的创建和销毁，并写一个servlet，然后用`sendRedirect`、`forward`方式跳转到其它`servlet`，查看`request`对象的创建和消耗)
+- `servletRequest`域对象创建和销毁的时机:
+ - 创建:用户每一次访问，都会创建一个`request`
+ - 销毁:当前访问结束，`request`对象就会销毁
+- 示例代码:
+```java
+public class MyServletRequestListener implements ServletRequestListener {
+	@Override
+	public void requestDestroyed(ServletRequestEvent sre) {
+		System.out.println(sre.getServletRequest() + "销毁了！！！");
+	}
+	@Override
+	public void requestInitialized(ServletRequestEvent sre) {
+		System.out.println(sre.getServletRequest() + "创建了!!!");
+	}
+}
+
+//web.xml文件
+  <listener>
+  	<listener-class>vvr.web.listener.MyServletRequestListener</listener-class>
+  </listener>
+```
 
