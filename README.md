@@ -530,4 +530,5 @@ public class MyServletRequestListener implements ServletRequestListener {
   </listener>
 ```
 - 统计网站在线人数:[OnLineCountListener.java](https://github.com/wangwren/javaweb/blob/master/day20_listener/src/vvr/web/listener/OnLineCountListener.java)
+- 定时发送任务,同样使用ServletContext监听器，在web服务器启动时就加载，注意在web.xml中配置监听器：[SendMailListener.java](https://github.com/wangwren/javaweb/blob/master/day20_listener/src/vvr/web/listener/SendMailListener.java)
 
