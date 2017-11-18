@@ -531,4 +531,9 @@ public class MyServletRequestListener implements ServletRequestListener {
 ```
 - 统计网站在线人数:[OnLineCountListener.java](https://github.com/wangwren/javaweb/blob/master/day20_listener/src/vvr/web/listener/OnLineCountListener.java)
 - 定时发送任务,同样使用ServletContext监听器，在web服务器启动时就加载，注意在web.xml中配置监听器：[SendMailListener.java](https://github.com/wangwren/javaweb/blob/master/day20_listener/src/vvr/web/listener/SendMailListener.java)
+### 监听三个域对象属性变化
+- `Servlet`规范定义了监听`ServletContext`,`HttpSession`,`HttpServletRequest`这三个对象中的属性变更信息事件监听器
+- 这三个监听器接口分别是:`ServletContextAttributeListener`，`HttpSessionAttributeListener`，`ServletRequestAttributeListener`
+- 这三个接口中都定义了三个方法来处理被监听对象中的属性的增加，删除和替换的事件，同一个事件在这三个接口中对应的方法名称完全相同，只是接受的参数类型不同
+- 具体代码:
 
