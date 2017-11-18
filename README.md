@@ -9,7 +9,7 @@
 - **[filter](#day18)**
 - **[使用filter完成权限管理](#权限管理)**
 - **[文件上传与下载](#day20)**
-- **[servelt监听器](#Servlet监听器)**
+- **[Servelt监听器](#day20listener)**
 # [servlet3.0特性](https://www.ibm.com/developerworks/cn/java/j-lo-servlet30/index.html)
 # javaweb
 记录javaweb学习过程中的代码
@@ -439,7 +439,8 @@ BLOB b = rs.getBlob("image");
  - **文件下载**
  [DownLoadServlet.java](https://github.com/wangwren/javaweb/blob/master/day20/src/vvr/web/servlet/DownLoadServlet.java)、[ListFilesServlet.java](https://github.com/wangwren/javaweb/blob/master/day20/src/vvr/web/servlet/ListFilesServlet.java)  
  [返回顶部](#目录)
-## Servlet监听器
+## day20listener
+### Servlet监听器
 - 在Servlet规范中定义了多种类型的监听器，他们用于监听的事件源分别是`ServletContext`、`HttpSession`和`ServletRequest`这三个域对象。
 - Servlet规范针对这三个对象上的操作，又把这多种类型的监听器划分为三种类型。
     - 监听三个域对象创建和销毁的事件监听器
