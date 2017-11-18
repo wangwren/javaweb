@@ -38,7 +38,7 @@
   -->
   
   <listener>
-  	<listener-class>vvr.web.listener.SendMailListener</listener-class>
+  	<listener-class>vvr.web.listener.MyRequestAndSessionAttributeListener</listener-class>
   </listener>
 
   

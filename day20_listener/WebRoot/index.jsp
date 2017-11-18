@@ -14,5 +14,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     当前在线人数${num}
+    <%
+    	application.setAttribute("name", "xxx");
+    	application.setAttribute("name", "yyy");
+    	application.removeAttribute("name");
+    	
+    	
+    	session.setAttribute("name", "xxx");
+    	session.setAttribute("name", "yyy");
+    	session.removeAttribute("name");
+    	request.setAttribute("name", "yyyy");
+     %>
   </body>
 </html>

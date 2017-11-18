@@ -27,7 +27,7 @@ public class SendMailListener implements ServletContextListener {
 		//定义一个定时器对象
 		Timer timer = new Timer();
 		
-		//该方法指定在某一时刻做什么事情，第一个参数代表要做的事情，第二个参数代表时间
+		//schedule 该方法指定在某一时刻做什么事情，第一个参数代表要做的事情，第二个参数代表时间
 		//也可以通过继承 TimerTask 实现run方法来实现想要做的事情
 		timer.schedule(new TimerTask() {
 			
