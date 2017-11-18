@@ -535,5 +535,5 @@ public class MyServletRequestListener implements ServletRequestListener {
 - `Servlet`规范定义了监听`ServletContext`,`HttpSession`,`HttpServletRequest`这三个对象中的属性变更信息事件监听器
 - 这三个监听器接口分别是:`ServletContextAttributeListener`，`HttpSessionAttributeListener`，`ServletRequestAttributeListener`
 - 这三个接口中都定义了三个方法来处理被监听对象中的属性的增加，删除和替换的事件，同一个事件在这三个接口中对应的方法名称完全相同，只是接受的参数类型不同
-- 具体代码:[MyServletContextAttributeListener.java](https://github.com/wangwren/javaweb/blob/master/day20_listener/src/vvr/web/listener/MyServletContextAttributeListener.java)、[MyRequestAndSessionAttributeListener.java](https://github.com/wangwren/javaweb/blob/master/day20_listener/src/vvr/web/listener/MyRequestAndSessionAttributeListener.java)
+- 具体代码:[MyServletContextAttributeListener.java](https://github.com/wangwren/javaweb/blob/master/day20_listener/src/vvr/web/listener/MyServletContextAttributeListener.java)、[MyRequestAndSessionAttributeListener.java](https://github.com/wangwren/javaweb/blob/master/day20_listener/src/vvr/web/listener/MyRequestAndSessionAttributeListener.java)、[index.jsp](https://github.com/wangwren/javaweb/blob/master/day20_listener/WebRoot/index.jsp)
 
