@@ -549,3 +549,5 @@ public class MyServletRequestListener implements ServletRequestListener {
  - 当绑定到`HttpSession`对象中的对象将要随`HttpSession`对象被活化之后，web服务器调用该对象的`sessionDidActivate(HttpSessionEvent se)`方法
  - 当绑定到`HttpSession`对象中的对象将要随`HttpSession`对象被活化之后，web服务器调用该对象的`sessionDidActivate(HttpSessionEvent se)`方法  
  [返回顶部](#目录)
+ ## web复习
+ [复习](https://github.com/wangwren/javaweb/blob/master/web%E5%A4%8D%E4%B9%A0.txt)
