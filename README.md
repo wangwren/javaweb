@@ -546,4 +546,5 @@ public class MyServletRequestListener implements ServletRequestListener {
 - `HttpSessionActivationListener`接口
  - 实现了`HttpSessionActivationListener`接口的`JavaBean`对象可以感知自己被**活化**和**钝化**的事件
  - 当绑定到`HttpSession`对象中的对象将要随`HttpSession`对象被钝化之前，web服务器调用如下方法:`sessionWillPassivate(HttpSessionEvent se)`方法
- - 当绑定到`HttpSession`对象中的对象将要随`HttpSession`对象被活化之后，web服务器调用该对象的`sessionDidActivate(HttpSessionEvent se)`方法
+ - 当绑定到`HttpSession`对象中的对象将要随`HttpSession`对象被活化之后，web服务器调用该对象的`sessionDidActivate(HttpSessionEvent se)`方法  
+ [返回顶部](#目录)
