@@ -536,4 +536,14 @@ public class MyServletRequestListener implements ServletRequestListener {
 - 这三个监听器接口分别是:`ServletContextAttributeListener`，`HttpSessionAttributeListener`，`ServletRequestAttributeListener`
 - 这三个接口中都定义了三个方法来处理被监听对象中的属性的增加，删除和替换的事件，同一个事件在这三个接口中对应的方法名称完全相同，只是接受的参数类型不同
 - 具体代码:[MyServletContextAttributeListener.java](https://github.com/wangwren/javaweb/blob/master/day20_listener/src/vvr/web/listener/MyServletContextAttributeListener.java)、[MyRequestAndSessionAttributeListener.java](https://github.com/wangwren/javaweb/blob/master/day20_listener/src/vvr/web/listener/MyRequestAndSessionAttributeListener.java)、[index.jsp](https://github.com/wangwren/javaweb/blob/master/day20_listener/WebRoot/index.jsp)
-
+### 感知`Session`绑定的事件监听器
+- 保存在`Session`域中的对象可以有多种状态:绑定到`Session`中；从`Session`域中解除绑定；随`Session`对象持久化到一个存储设备中；随`Session`对象从一个存储设备中恢复
+- `Servlet`规范中定义了两个特殊的监听器接口来帮助`JavaBean`对象了解**自己**在`Session`域中的这些状态:`HttpSessionBindingListener`接口和`HttpSessionActivationListener`接口，实现这两个接口的类不需要在`web.xml`文件中进行注册
+- `HttpSessionBindingListener`接口
+ - 实现了`HttpSessionBindingListener`接口的`JavaBean`对象可以感知自己被绑定到`Session`中和从`Session`中删除的事件
+ - 当对象被绑定到`HttpSession`对象中时，web服务器调用该对象的`void valueBound(HttpSessionBindingEvent event)`方法
+ - 当对象从`HttpSession`对象中解除绑定时，web服务器调用该对象的`void valueUnbound(HttpSessionBindingEvent event)`方法
+- `HttpSessionActivationListener`接口
+ - 实现了`HttpSessionActivationListener`接口的`JavaBean`对象可以感知自己被**活化**和**钝化**的事件
+ - 当绑定到`HttpSession`对象中的对象将要随`HttpSession`对象被钝化之前，web服务器调用如下方法:`sessionWillPassivate(HttpSessionEvent se)`方法
+ - 当绑定到`HttpSession`对象中的对象将要随`HttpSession`对象被活化之后，web服务器调用该对象的`sessionDidActivate(HttpSessionEvent se)`方法
